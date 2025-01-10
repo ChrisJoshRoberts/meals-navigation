@@ -1,7 +1,12 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
 import DietLabels from "../components/DietLabels"
+import { useLayoutEffect, useState } from "react"
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const MealDetailScreen = ({ route }) => {
+
+const MealDetailScreen = ({ route, navigation }) => {
+  const [isPressed, setIsPressed] = useState(false)
+
   const mealTitle = route.params.title
   const imgUrl = route.params.imageUrl
   const complexity = route.params.complexity
@@ -13,6 +18,23 @@ const MealDetailScreen = ({ route }) => {
   const isVegetarian = route.params.isVegetarian
   const isGlutenFree = route.params.isGlutenFree
   const isLactoseFree = route.params.isLactoseFree
+
+  function headerButtonHandler() {
+    alert('This is a button!')
+    setIsPressed(!isPressed)
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable 
+          onPress={headerButtonHandler}
+        >
+          <Ionicons name={isPressed ? "star" : "star-outline"} size={24} color="black" />
+        </Pressable>
+      )
+    })
+  })
 
   return (
     <ScrollView style={{flex: 1, paddingBottom: 16}}>

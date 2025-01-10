@@ -1,5 +1,5 @@
 
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import CategoriesScreen from './screens/CategoriesScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -36,20 +36,7 @@ export default function App() {
               title: route.params.categoryId
             }
           }} />
-          <Stack.Screen name="MealDetail" component={MealDetailScreen} options={
-            {
-              headerRight: () => (
-                <Pressable 
-                  onPress={() => {
-                    alert('This is a button!')
-                    setIsPressed(!isPressed)
-                  }}
-                >
-                  <Ionicons name={isPressed ? "star" : "star-outline"} size={24} color="black" />
-                </Pressable>
-              )
-            }
-          }/>
+          <Stack.Screen name="MealDetail" component={MealDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </FavouritesContextProvider>
