@@ -1,6 +1,6 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
 import DietLabels from "../components/DietLabels"
-import { useLayoutEffect, useState } from "react"
+import { useLayoutEffect } from "react"
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useContext } from "react"
 import { FavouritesContext } from "../store/context/favourites-context"
@@ -29,6 +29,7 @@ const MealDetailScreen = ({ route, navigation }) => {
     } else {
       FavouriteMealsContext.addFavourite(mealId)
     }
+    alert(mealIsFav ? "Removed from favourites" : "Added to favourites")
   }
 
   useLayoutEffect(() => {
