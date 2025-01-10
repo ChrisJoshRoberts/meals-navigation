@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "backgroundColor": "#072448",
+    "newArchEnabled": true ,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

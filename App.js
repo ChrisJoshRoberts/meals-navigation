@@ -5,8 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavouriteScreen from './screens/FavouriteScreen';
 import FavouritesContextProvider from './store/context/favourites-context';
@@ -18,14 +16,13 @@ const Drawer = createDrawerNavigator();
 function DrawerNav() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name='Categories' component={CategoriesScreen} />
+      <Drawer.Screen name='All Categories' component={CategoriesScreen} />
       <Drawer.Screen name='Favourites' component={FavouriteScreen} />
     </Drawer.Navigator>
   )
 }
 
 export default function App() {
-  const [isPressed, setIsPressed] = useState(false)
   return (
     <FavouritesContextProvider>
       <NavigationContainer >

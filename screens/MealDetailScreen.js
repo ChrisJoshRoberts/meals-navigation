@@ -2,11 +2,13 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-nati
 import DietLabels from "../components/DietLabels"
 import { useLayoutEffect, useState } from "react"
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useContext } from "react"
+import { FavouritesContext } from "../store/context/favourites-context"
 
 
 const MealDetailScreen = ({ route, navigation }) => {
-  const [isPressed, setIsPressed] = useState(false)
-
+  const FavouriteMealsContext = useContext(FavouritesContext);
+  const mealId = route.params.mealId
   const mealTitle = route.params.title
   const imgUrl = route.params.imageUrl
   const complexity = route.params.complexity
@@ -19,9 +21,14 @@ const MealDetailScreen = ({ route, navigation }) => {
   const isGlutenFree = route.params.isGlutenFree
   const isLactoseFree = route.params.isLactoseFree
 
+  const mealIsFav = FavouriteMealsContext.ids.includes(mealId)
+
   function headerButtonHandler() {
-    alert('This is a button!')
-    setIsPressed(!isPressed)
+    if (mealIsFav) {
+      FavouriteMealsContext.removeFavourite(mealId)
+    } else {
+      FavouriteMealsContext.addFavourite(mealId)
+    }
   }
 
   useLayoutEffect(() => {
@@ -30,11 +37,11 @@ const MealDetailScreen = ({ route, navigation }) => {
         <Pressable 
           onPress={headerButtonHandler}
         >
-          <Ionicons name={isPressed ? "star" : "star-outline"} size={24} color="black" />
+          <Ionicons name={mealIsFav ? "star" : "star-outline"} size={24} color="black" />
         </Pressable>
       )
     })
-  })
+  }, [navigation, headerButtonHandler])
 
   return (
     <ScrollView style={{flex: 1, paddingBottom: 16}}>
