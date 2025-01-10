@@ -2,12 +2,17 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-nati
 import DietLabels from "../components/DietLabels"
 import { useLayoutEffect } from "react"
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useContext } from "react"
-import { FavouritesContext } from "../store/context/favourites-context"
+import { useDispatch, useSelector } from "react-redux";
+// import { useContext } from "react"
+// import { FavouritesContext } from "../store/context/favourites-context"
+import { addFavourite, removeFavourite } from "../store/redux/favourites";
 
 
 const MealDetailScreen = ({ route, navigation }) => {
-  const FavouriteMealsContext = useContext(FavouritesContext);
+  // const FavouriteMealsContext = useContext(FavouritesContext);
+  const FavouriteMealIds = useSelector((state) => state.favoriteMeals.ids)
+  const dipatch = useDispatch()
+
   const mealId = route.params.mealId
   const mealTitle = route.params.title
   const imgUrl = route.params.imageUrl
@@ -21,13 +26,15 @@ const MealDetailScreen = ({ route, navigation }) => {
   const isGlutenFree = route.params.isGlutenFree
   const isLactoseFree = route.params.isLactoseFree
 
-  const mealIsFav = FavouriteMealsContext.ids.includes(mealId)
+  const mealIsFav = FavouriteMealIds.includes(mealId)
 
   function headerButtonHandler() {
     if (mealIsFav) {
-      FavouriteMealsContext.removeFavourite(mealId)
+      // FavouriteMealsContext.removeFavourite(mealId)
+      dipatch(removeFavourite({id: mealId}))
     } else {
-      FavouriteMealsContext.addFavourite(mealId)
+      // FavouriteMealsContext.addFavourite(mealId)
+      dipatch(addFavourite({id: mealId}))
     }
     alert(mealIsFav ? "Removed from favourites" : "Added to favourites")
   }
