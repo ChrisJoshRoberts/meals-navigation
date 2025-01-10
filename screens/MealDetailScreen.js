@@ -33,6 +33,7 @@ const MealDetailScreen = ({ route, navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: mealTitle,
       headerRight: () => (
         <Pressable 
           onPress={headerButtonHandler}
