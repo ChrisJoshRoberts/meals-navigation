@@ -7,10 +7,24 @@ export const FavouritesContext = createContext({
 })
 
 function FavouritesContextProvider({children}) {
-  
+  const [favouriteMealIds, setFavouriteMealIds] = useState([])
+
+  function addFavourite(id) {
+    setFavouriteMealIds([...favouriteMealIds, id])
+  }
+
+  function removeFavourite(id) {
+    setFavouriteMealIds(favouriteMealIds.filter(mealId => mealId !== id))
+  }
+
+  const value = {
+    ids: favouriteMealIds,
+    addFavourite,
+    removeFavourite,
+  }
 
   return (
-    <FavouritesContext.Provider value={{}}>
+    <FavouritesContext.Provider value={value}>
       {children}
     </FavouritesContext.Provider>
   )
