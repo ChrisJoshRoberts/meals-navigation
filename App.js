@@ -1,5 +1,5 @@
 
-import { Button, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import CategoriesScreen from './screens/CategoriesScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavouriteScreen from './screens/FavouriteScreen';
+import FavouritesContextProvider from './store/context/favourites-context';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,31 +27,32 @@ function DrawerNav() {
 export default function App() {
   const [isPressed, setIsPressed] = useState(false)
   return (
-    <NavigationContainer >
-      <Stack.Navigator >
-        <Stack.Screen name="Categories" component={DrawerNav} options={{headerShown: false}} />
-
-        <Stack.Screen name="Meals" component={MealsOverviewScreen} options={({route, navigation}) => {
-          return {
-            title: route.params.categoryId
-          }
-        }} />
-        <Stack.Screen name="MealDetail" component={MealDetailScreen} options={
-          {
-            headerRight: () => (
-              <Pressable 
-                onPress={() => {
-                  alert('This is a button!')
-                  setIsPressed(!isPressed)
-                }}
-              >
-                <Ionicons name={isPressed ? "star" : "star-outline"} size={24} color="black" />
-              </Pressable>
-            )
-          }
-        }/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <FavouritesContextProvider>
+      <NavigationContainer >
+        <Stack.Navigator >
+          <Stack.Screen name="Categories" component={DrawerNav} options={{headerShown: false}} />
+          <Stack.Screen name="Meals" component={MealsOverviewScreen} options={({route, navigation}) => {
+            return {
+              title: route.params.categoryId
+            }
+          }} />
+          <Stack.Screen name="MealDetail" component={MealDetailScreen} options={
+            {
+              headerRight: () => (
+                <Pressable 
+                  onPress={() => {
+                    alert('This is a button!')
+                    setIsPressed(!isPressed)
+                  }}
+                >
+                  <Ionicons name={isPressed ? "star" : "star-outline"} size={24} color="black" />
+                </Pressable>
+              )
+            }
+          }/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavouritesContextProvider>
   );
 }
 
