@@ -7,30 +7,29 @@ import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import FavouriteScreen from './screens/FavouriteScreen';
 
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNav() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name='Categories' component={CategoriesScreen} />
+      <Drawer.Screen name='Favourites' component={FavouriteScreen} />
+    </Drawer.Navigator>
+  )
+}
 
 export default function App() {
   const [isPressed, setIsPressed] = useState(false)
   return (
     <NavigationContainer >
       <Stack.Navigator >
-        <Stack.Screen name="Categories" component={CategoriesScreen} options={
-          {
-            title: 'All Categories',
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            contentStyle: {
-              backgroundColor: '#f4511e'
-            }
-          }
-        }/>
+        <Stack.Screen name="Categories" component={DrawerNav} options={{headerShown: false}} />
+
         <Stack.Screen name="Meals" component={MealsOverviewScreen} options={({route, navigation}) => {
           return {
             title: route.params.categoryId
